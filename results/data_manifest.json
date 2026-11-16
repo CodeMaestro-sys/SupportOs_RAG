@@ -1,0 +1,48 @@
+{
+  "files": {
+    "data/processed/abstain_clean.csv": "0b53cbdf942b714f50665171009791e55cb355e1a9880c482236809db3191049",
+    "data/processed/dev_clean.csv": "1f37b26006c524986dc08dfc549ac11559ca8136cecbdbeac8a170ba653c0b93",
+    "data/processed/past_clean.csv": "0c6d91e936a3c25224c72f1d5f038a749caf312fbe0b28d24d22e6989f28f9c0",
+    "data/processed/test_clean.csv": "3d6378af9565761b3afe5b7a1b0ecd86dc15ae1d5fdffa81b126789c7e296933",
+    "data/docs/cancel-order.md": "2ccfd120f0eeb28c3453313044d10bb7c7eb0a7d0f3314e801c6471e89d2701f",
+    "data/docs/change-order.md": "7fe14bc9ff71433ce778ed0df75d7ab0cd28df839d64d3240b2be39fc938065c",
+    "data/docs/complaints.md": "97f188380e277dea0e90d8a6ecfb5f4cf9e13952729ec7d77f3e679bfd9a480e",
+    "data/docs/contact-support.md": "1fc880f4bec374ed0dc5c5ea367f3e60236ecfc2a8c9ea18238c46f3f303467b",
+    "data/docs/create-account.md": "444451e4d5538d1f787fb74afa3e0db97e018635032f6d8f1c160c8653c574cd",
+    "data/docs/delete-account.md": "5ab4b3ba424ea225528009a9570db8aaa470abbc981eefe82572242260814e77",
+    "data/docs/delivery-options.md": "aa1c175e9b1f75249b12405b00662c448e925433ed0d829bb116ec3127114345",
+    "data/docs/delivery-times.md": "806b0288e07b62fa3a000f682088bfa959f6829d6291d1bf4c39befe6270cfb3",
+    "data/docs/edit-account.md": "0ae24c6f7be48c72984d69ccd99c0188c165b10fcc97900aec4a15236e1acabd",
+    "data/docs/intent_to_doc.csv": "a053f3bd6c018237f481e5ad767a3098176dd63fcb4c77098a635887258b44f7",
+    "data/docs/invoices.md": "9acade3447465c1ef8d43c40d6bb55cae2c90ddd436d0fc55aa857345e2bdb1d",
+    "data/docs/password-recovery.md": "9e838923aa1dda4d4f23d6395453e9e680491702014f51941cb2729535c08418",
+    "data/docs/payment-methods.md": "e0079b677ff840495efd7dabbcfa938a91dc3a9516435b6dbc8aa21114bda87e",
+    "data/docs/payment-problems.md": "c2ee15f234b274ac9edfdc4f94eb8fa8ad94bb082248590c24391aa1da8a660f",
+    "data/docs/place-order.md": "fa7349c9f1143b16c0b69cf2ba5b24cd85aae822982eca29605a5b716edd06df",
+    "data/docs/refund-policy.md": "f3b5ea6b6ccb8a33542a268853fe0c13a0a076d23210a1a93019b9056bc91c75",
+    "data/docs/refund-tracking.md": "3253ef0ced3d9e4a5ba57a6c0759e35612c4a637e9750013726fbd5ea176ce5a",
+    "data/docs/shipping-address.md": "1bed68585225f00e6e4f2a424bbb724abf5f3c83ab5a0a4b2fedf8994555b172",
+    "data/docs/track-order.md": "c65cf39897827db708d1be6776a529770b6c49c6356057bf51fe80548389b1d3"
+  },
+  "rows": {
+    "abstain_clean.csv": 30,
+    "dev_clean.csv": 46,
+    "past_clean.csv": 22788,
+    "test_clean.csv": 92
+  },
+  "settings": {
+    "split_seed": 42,
+    "left_out_intents": [
+      "newsletter_subscription",
+      "check_cancellation_fee",
+      "switch_account",
+      "review"
+    ],
+    "test_per_intent": 4,
+    "dev_per_intent": 2,
+    "abstain_dev_rule": "ticket_id % 3 == 0",
+    "retrieval": "BAAI/bge-small-en-v1.5, passage chunks, no retrieval floor",
+    "prompt": "C",
+    "llm_model": "gemini-3.5-flash-lite"
+  }
+}

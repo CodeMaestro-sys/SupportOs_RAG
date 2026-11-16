@@ -1,0 +1,22 @@
+# secrets
+.env
+
+# data that can be rebuilt (and the dataset's license says to be careful about sharing it)
+data/raw/
+data/processed/
+
+# databases and cache, which are rebuilt by scripts or are private
+*.db
+data/llm_cache.db
+
+# Python and notebook clutter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# virtual environments and editor or OS files
+.venv/
+venv/
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,34 @@
+date,system,sample,n,hit@1,hit@3,hit@5,MRR,note
+2026-11-14,bm25_raw,tuning,1137,0.3,0.476,0.594,0.445,"no stemming, no stopwords"
+2026-11-14,bm25_clean,tuning,1137,0.382,0.619,0.749,0.541,"stemming, stopwords, order numbers removed"
+2026-11-14,dense,tuning,1137,0.727,0.884,0.952,0.819,bge-small-en-v1.5
+2026-11-14,hybrid_rrf,tuning,1137,0.547,0.812,0.887,0.696,equal-weight RRF
+2026-11-14,dense,tuning_flag_Z,225,0.64,0.84,0.938,0.756,
+2026-11-14,dense,tuning_flag_K,92,0.804,0.924,0.967,0.87,
+2026-11-14,dense,tuning_flag_Q,370,0.695,0.878,0.951,0.8,
+2026-11-14,dense_doc,tuning,1137,0.727,0.884,0.952,0.819,"bge-small, whole documents"
+2026-11-14,dense_chunks,tuning,1137,0.734,0.916,0.97,0.834,"bge-small, 67 chunks, max-chunk score"
+2026-11-14,dense_doc,confirm,1140,0.711,0.872,0.948,0.808,
+2026-11-14,dense_chunks,confirm,1140,0.745,0.918,0.969,0.84,
+2026-11-16,bm25_raw,tuning,1137,0.3,0.476,0.594,0.445,"no stemming, no stopwords"
+2026-11-16,bm25_clean,tuning,1137,0.382,0.619,0.749,0.541,"stemming, stopwords, order numbers removed"
+2026-11-16,dense,tuning,1137,0.727,0.884,0.952,0.819,bge-small-en-v1.5
+2026-11-16,hybrid_rrf,tuning,1137,0.547,0.812,0.887,0.696,equal-weight RRF
+2026-11-16,dense,tuning_flag_Z,225,0.64,0.84,0.938,0.756,
+2026-11-16,dense,tuning_flag_K,92,0.804,0.924,0.967,0.87,
+2026-11-16,dense,tuning_flag_Q,370,0.695,0.878,0.951,0.8,
+2026-11-16,dense_doc,tuning,1137,0.727,0.884,0.952,0.819,"bge-small, whole documents"
+2026-11-16,dense_chunks,tuning,1137,0.734,0.916,0.97,0.834,"bge-small, 67 chunks, max-chunk score"
+2026-11-16,dense_doc,confirm,1140,0.711,0.872,0.948,0.808,
+2026-11-16,dense_chunks,confirm,1140,0.745,0.918,0.969,0.84,
+2026-11-16,bm25_raw,tuning,1137,0.296,0.476,0.594,0.443,"no stemming, no stopwords"
+2026-11-16,bm25_clean,tuning,1137,0.387,0.616,0.749,0.543,"stemming, stopwords, order numbers removed"
+2026-11-16,dense,tuning,1137,0.724,0.882,0.951,0.817,bge-small-en-v1.5
+2026-11-16,hybrid_rrf,tuning,1137,0.549,0.814,0.885,0.697,equal-weight RRF
+2026-11-16,dense,tuning_flag_Z,225,0.622,0.831,0.933,0.746,
+2026-11-16,dense,tuning_flag_K,92,0.772,0.902,0.957,0.849,
+2026-11-16,dense,tuning_flag_Q,370,0.692,0.878,0.951,0.799,
+2026-11-16,dense_doc,tuning,1137,0.724,0.882,0.951,0.817,"bge-small, whole documents"
+2026-11-16,dense_chunks,tuning,1137,0.73,0.916,0.97,0.832,"bge-small, 67 chunks, max-chunk score"
+2026-11-16,dense_doc,confirm,1140,0.711,0.871,0.948,0.807,
+2026-11-16,dense_chunks,confirm,1140,0.744,0.918,0.969,0.84,

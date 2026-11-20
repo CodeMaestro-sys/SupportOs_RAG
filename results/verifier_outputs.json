@@ -1,0 +1,356 @@
+{
+ "1": [
+  {
+   "id": 1,
+   "sentence": "Hello!",
+   "llm_label": "not_factual",
+   "bad_tokens": []
+  },
+  {
+   "id": 2,
+   "sentence": "You can cancel an order at any time before it is dispatched [2].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 3,
+   "sentence": "To cancel online, sign in to the ShopEase customer portal, open **My Orders**, select the order, click **Cancel Order**, choose a reason, and confirm [2].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 4,
+   "sentence": "If you cannot cancel online, contact customer support on +91 00000 00000 or support@shopease.example (Monday to Friday, 9 AM to 6 PM) and quote your order number [4].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  }
+ ],
+ "2": [
+  {
+   "id": 1,
+   "sentence": "Hello!",
+   "llm_label": "not_factual",
+   "bad_tokens": []
+  },
+  {
+   "id": 2,
+   "sentence": "You can cancel your order at any time before it is dispatched [2].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 3,
+   "sentence": "To cancel, sign in to the ShopEase customer portal and open **My Orders**, select your order, click **Cancel Order**, choose a reason, and confirm [2].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 4,
+   "sentence": "If you cannot cancel online, you can contact customer support at +91 00000 00000 or support@shopease.example (Monday to Friday, 9 AM to 6 PM) and quote your order number [1].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 5,
+   "sentence": "If the order is already dispatched, cancellation is no longer possible, but you can refuse the delivery or return the items within 30 days under the refund policy [3].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  }
+ ],
+ "3": [
+  {
+   "id": 1,
+   "sentence": "You can change an order until it is dispatched [4].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 2,
+   "sentence": "Once the order status shows **Dispatched**, it can no longer be changed [4].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 3,
+   "sentence": "You can change the item size or colour, quantity, delivery address, or delivery option where the new option is available [4].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 4,
+   "sentence": "If **Change Order** is not shown for your order, or the change you need is not listed, contact customer support on +91 00000 00000 or support@shopease.example (Monday to Friday, 9 AM to 6 PM) and quote your order number [3].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 5,
+   "sentence": "Customer support can help with the rest of your request.",
+   "llm_label": "not_factual",
+   "bad_tokens": []
+  }
+ ],
+ "4": [
+  {
+   "id": 1,
+   "sentence": "Hello!",
+   "llm_label": "not_factual",
+   "bad_tokens": []
+  },
+  {
+   "id": 2,
+   "sentence": "If the change you need is not listed, or if the option is not shown for your order, please contact customer support on +91 00000 00000 or support@shopease.example (Monday to Friday, 9 AM to 6 PM) and quote your order number [2].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 3,
+   "sentence": "Customer support can help with the rest of your request.",
+   "llm_label": "not_factual",
+   "bad_tokens": []
+  }
+ ],
+ "5": [
+  {
+   "id": 1,
+   "sentence": "To find your bill, open Account Settings and select Billing History, then choose a date range to list all invoices in that period [1].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 2,
+   "sentence": "You can click an invoice to see its details or download it [1].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 3,
+   "sentence": "An invoice is also emailed to your registered address when the order is dispatched [2].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 4,
+   "sentence": "If the invoice is missing after dispatch, check your spam folder and then contact customer support [3].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  }
+ ],
+ "6": [
+  {
+   "id": 1,
+   "sentence": "ShopEase accepts credit and debit cards (Visa, Mastercard, and RuPay), UPI, net banking, and cash on delivery for standard delivery orders up to \u20b95,000 [1].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 2,
+   "sentence": "The specific payment methods available for your order will be shown at checkout before you place the order [2][3].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  }
+ ],
+ "7": [
+  {
+   "id": 1,
+   "sentence": "ShopEase accepts the following payment methods: credit and debit cards (Visa, Mastercard, and RuPay), UPI (using any UPI app or QR code), net banking for major Indian banks, and cash on delivery for standard delivery orders up to \u20b95,000 [1].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 2,
+   "sentence": "All prices are in rupees (\u20b9) [1].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 3,
+   "sentence": "If a payment method is not shown at checkout, it may not be available for your order, and you can try another method or contact customer support [4].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  }
+ ],
+ "8": [
+  {
+   "id": 1,
+   "sentence": "You can request a refund for duplicate or unauthorized charges, damaged or defective items, and orders that did not arrive [4].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 2,
+   "sentence": "To request a refund, sign in to the ShopEase customer portal and open **My Orders**, select the order, and click **Return or Refund** [2].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 3,
+   "sentence": "Then, choose the item and the reason, and submit the request [2].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 4,
+   "sentence": "Customer support can help with the rest.",
+   "llm_label": "not_factual",
+   "bad_tokens": []
+  }
+ ],
+ "9": [
+  {
+   "id": 1,
+   "sentence": "To request a refund, sign in to the ShopEase customer portal and open **My Orders**, select the order and click **Return or Refund**, then choose the item and the reason to submit the request [3].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 2,
+   "sentence": "For other complaints, if you are not satisfied with the outcome, reply to the email we sent you and ask for your case to be passed to a senior support agent [1].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 3,
+   "sentence": "Customer support can help with the rest.",
+   "llm_label": "not_factual",
+   "bad_tokens": []
+  }
+ ],
+ "10": [
+  {
+   "id": 1,
+   "sentence": "To file a complaint, you can sign in to the ShopEase customer portal, go to **My Orders**, select the order, and choose **Report a problem** [3].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 2,
+   "sentence": "Alternatively, you can contact customer support by calling +91 00000 00000, emailing support@shopease.example, or using the live chat on www.shopease.example (Monday to Friday, 9 AM to 6 PM) [3].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 3,
+   "sentence": "Please include your order number, a short description of what happened, and photos if an item was damaged or wrong [2].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  }
+ ],
+ "11": [
+  {
+   "id": 1,
+   "sentence": "If you prefer to speak to a human agent instead of using the automated help, you can use the phone line at +91 00000 00000 or select the \"Talk to an agent\" option in live chat on www.shopease.example [1][2].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 2,
+   "sentence": "Support hours are Monday to Friday, 9 AM to 6 PM [3].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  }
+ ],
+ "12": [
+  {
+   "id": 1,
+   "sentence": "Support hours are Monday to Friday, 9 AM to 6 PM [1][2][3][4].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  }
+ ],
+ "13": [
+  {
+   "id": 1,
+   "sentence": "Hello!",
+   "llm_label": "not_factual",
+   "bad_tokens": []
+  },
+  {
+   "id": 2,
+   "sentence": "You can reach ShopEase customer support in three ways: by phone at +91 00000 00000, by email at support@shopease.example, or via live chat on www.shopease.example by choosing the \"Talk to an agent\" option [1][2].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 3,
+   "sentence": "Support hours are Monday to Friday, 9 AM to 6 PM, and messages sent outside these hours are answered on the next business day [4].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 4,
+   "sentence": "To help us find your case quickly, please have your order number or registered email address ready [4].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 5,
+   "sentence": "Let us know if you need help with anything else!",
+   "llm_label": "not_factual",
+   "bad_tokens": []
+  }
+ ],
+ "14": [
+  {
+   "id": 1,
+   "sentence": "If you prefer to speak to a human agent instead of using the automated help, you can use the phone line or select the \"Talk to an agent\" option in live chat [2].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 2,
+   "sentence": "Support hours are Monday to Friday, from 9 AM to 6 PM [3].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 3,
+   "sentence": "To help us find your case quickly, please have your order number or registered email address ready, and include the invoice number if your question is about an invoice [3].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  }
+ ],
+ "15": [
+  {
+   "id": 1,
+   "sentence": "Creating a ShopEase account is free and takes about two minutes [2].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 2,
+   "sentence": "Here are the steps to create an account:",
+   "llm_label": "not_factual",
+   "bad_tokens": []
+  },
+  {
+   "id": 3,
+   "sentence": "Go to www.shopease.example and click **Sign up** [2].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 4,
+   "sentence": "Enter your full name, email address, mobile number and a password [2]. (Your password must be at least 8 characters and include a letter and a number [1].)",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 5,
+   "sentence": "Click **Create account**, and we will send a verification email [2].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 6,
+   "sentence": "Open the email and click the verification link, which is valid for 24 hours [2].",
+   "llm_label": "supported",
+   "bad_tokens": []
+  },
+  {
+   "id": 7,
+   "sentence": "If you need any further assistance, customer support can help [3].",
+   "llm_label": "not_factual",
+   "bad_tokens": []
+  }
+ ]
+}

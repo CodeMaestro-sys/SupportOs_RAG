@@ -18,8 +18,10 @@ CREATE TABLE IF NOT EXISTS drafts (
     ticket_id       INTEGER NOT NULL REFERENCES support_tickets(ticket_id),
     created_at      TEXT NOT NULL,
     model           TEXT NOT NULL,
+    verifier_model  TEXT NOT NULL,
     prompt_version  TEXT NOT NULL,
     outcome         TEXT NOT NULL CHECK (outcome IN ('answered', 'clarify', 'refused')),
+    reason          TEXT NOT NULL DEFAULT '',
     draft_text      TEXT NOT NULL,
     passages_json   TEXT NOT NULL,
     sentences_json  TEXT NOT NULL
@@ -48,4 +50,9 @@ def get_app_connection(path=None):
 
 def init_app_db(conn):
     conn.executescript(SCHEMA)
+    # Migration: CREATE TABLE IF NOT EXISTS never changes a table that already exists, so columns added
+    # later are added here with ALTER TABLE if they are missing.
+    columns = {row["name"] for row in conn.execute("PRAGMA table_info(resolutions)")}
+    if "similarity" not in columns:
+        conn.execute("ALTER TABLE resolutions ADD COLUMN similarity REAL")
     conn.commit()

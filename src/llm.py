@@ -21,7 +21,7 @@ class LLM:
         self._last = 0.0
         self.calls = 0
         self.cache_hits = 0
-        self.db = sqlite3.connect(cache_path)
+        self.db = sqlite3.connect(cache_path, check_same_thread=False)
         self.db.execute("CREATE TABLE IF NOT EXISTS llm_cache "
                         "(key TEXT PRIMARY KEY, model TEXT, prompt TEXT, response TEXT, created TEXT)")
 

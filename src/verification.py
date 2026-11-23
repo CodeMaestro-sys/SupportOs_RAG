@@ -58,3 +58,15 @@ def verify(llm, draft_out, customer_message):
     return [{"id": i, "sentence": s, "llm_label": labels.get(i, "unparsed"),
              "bad_tokens": rule_check(s, passages_text, customer_message)}
             for i, s in enumerate(sentences, 1)]
+
+def strict_rule_flags(sentence, passages, customer):
+    """Numbers, emails and web addresses that appear nowhere in the passages or the customer message.
+    Whole-token matching (a '2' does not match inside '12'). passages: list of (doc_id, text, score)."""
+    source = (" ".join(p[1] for p in passages) + " " + customer).lower()
+    s = re.sub(r"\[\d+\]", "", sentence)
+    bad = []
+    for tok in NUM.findall(s) + CONTACT.findall(s):
+        t = tok.lower().rstrip(".,")
+        if not re.search(r"(?<![\d,.])" + re.escape(t) + r"(?!\d|,\d|\.\d)", source):
+            bad.append(tok)
+    return bad

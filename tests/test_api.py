@@ -8,6 +8,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 import api
 import app_db
 
+CLEAN = "You can cancel an order before it is dispatched. Customer support can help with the rest."
+
 CANNED = {
     "outcome": "answered",
     "reason": "",
@@ -146,7 +148,7 @@ def test_accepting_a_draft_resolves_the_ticket(client):
     assert r.status_code == 201
     body = r.json()
     assert body["agent_action"] == "accepted" and body["similarity"] == 1.0
-    assert body["final_text"] == CANNED["draft_text"] and body["draft_id"] == 1
+    assert body["final_text"] == CLEAN and body["draft_id"] == 1
     assert client.get(f"/tickets/{tid}").json()["status"] == "resolved"
     assert client.get(f"/tickets/{tid}/resolution").json()["resolution_id"] == body["resolution_id"]
 
@@ -161,7 +163,7 @@ def test_editing_a_draft_records_how_much_changed(client):
 
 def test_edit_with_unchanged_text_is_rejected(client):
     tid = drafted_ticket(client)
-    r = client.post(f"/tickets/{tid}/resolve", json={"action": "edited", "final_text": CANNED["draft_text"]})
+    r = client.post(f"/tickets/{tid}/resolve", json={"action": "edited", "final_text": CLEAN})
     assert r.status_code == 422
 
 
@@ -214,3 +216,11 @@ def test_migration_adds_missing_column(tmp_path):
     app_db.init_app_db(conn)
     assert "similarity" in {row["name"] for row in conn.execute("PRAGMA table_info(resolutions)")}
     conn.close()
+
+
+def test_draft_comes_with_a_customer_ready_reply_text(client):
+    use_pipeline(FakePipeline())
+    tid = new_ticket(client)
+    body = client.post(f"/tickets/{tid}/draft").json()
+    assert "[1]" in body["draft_text"]                   # the raw draft keeps its citations
+    assert body["reply_text"] == CLEAN                   # the reply for the customer does not

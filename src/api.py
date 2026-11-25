@@ -13,6 +13,7 @@ from fastapi import Depends, FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 import app_db
+from textutil import to_customer_text
 
 log = logging.getLogger("supportops")
 VALID_STATUSES = {"open", "in_review", "resolved"}
@@ -26,7 +27,7 @@ async def lifespan(app):
     yield
 
 
-app = FastAPI(title="SupportOps API", version="0.3", lifespan=lifespan)
+app = FastAPI(title="SupportOps API", version="0.4", lifespan=lifespan)
 
 _pipeline = None
 
@@ -84,7 +85,8 @@ class DraftOut(BaseModel):
     created_at: str
     outcome: str                # answered, clarify or refused
     reason: str
-    draft_text: str
+    draft_text: str            # raw draft with [n] citations
+    reply_text: str            # the same text as the customer should read it
     passages: list[Passage]
     sentences: list[Sentence]
     model: str
@@ -119,6 +121,7 @@ def draft_row_to_dict(row):
     d = dict(row)
     d["passages"] = json.loads(d.pop("passages_json"))
     d["sentences"] = json.loads(d.pop("sentences_json"))
+    d["reply_text"] = to_customer_text(d["draft_text"])
     return d
 
 
@@ -202,7 +205,7 @@ def resolve_ticket(ticket_id: int, body: ResolveIn, db=Depends(get_db)):
     else:
         draft = db.execute("SELECT * FROM drafts WHERE ticket_id = ? ORDER BY draft_id DESC LIMIT 1",
                            (ticket_id,)).fetchone()
-    draft_text = (draft["draft_text"] if draft else "").strip()
+    draft_text = to_customer_text(draft["draft_text"]) if draft else ""        # compare and store the customer-facing text
 
     if body.action == "accepted":
         if not draft_text:

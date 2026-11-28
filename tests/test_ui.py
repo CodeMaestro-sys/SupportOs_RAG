@@ -29,6 +29,8 @@ class FakeBackend:
         self.tickets = tickets if tickets is not None else [
             {"ticket_id": 1, "query": "cancel my order", "status": status, "created_at": "now"}]
         self.draft, self.resolutions, self.resolve_calls, self.created = draft, {}, [], []
+        self.similar = [{"ticket_id": 7, "intent": "cancel_order", "query": "cancel my order",
+                         "response": "Open My Orders and click Cancel Order.", "score": 0.91}]
 
     def install(self, monkeypatch):
         monkeypatch.setattr(api_client, "list_tickets", lambda status=None: [t for t in self.tickets if not status or t["status"] == status])
@@ -37,6 +39,7 @@ class FakeBackend:
         monkeypatch.setattr(api_client, "create_draft", self.create_draft)
         monkeypatch.setattr(api_client, "create_ticket", self.create_ticket)
         monkeypatch.setattr(api_client, "resolve", self.resolve)
+        monkeypatch.setattr(api_client, "similar_tickets", lambda tid, k=3: self.similar)
 
     def create_draft(self, tid):
         self.draft = make_draft([SUPPORTED])
@@ -143,3 +146,35 @@ def test_api_down_shows_an_error_instead_of_crashing(monkeypatch):
     at = AppTest.from_file(APP, default_timeout=15).run()
     assert not at.exception
     assert any("Cannot reach" in e.value for e in at.error)
+
+
+def test_similar_tickets_are_shown_for_context(monkeypatch):
+    backend = FakeBackend(draft=make_draft([SUPPORTED]), status="in_review")
+    backend.install(monkeypatch)
+    at = AppTest.from_file(APP, default_timeout=15).run()
+    assert not at.exception
+    assert any("Similar resolved tickets" in m.value for m in at.markdown)
+    assert any("not from these replies" in c.value for c in at.caption)
+
+
+def test_failure_of_the_similar_search_does_not_block_the_agent(monkeypatch):
+    backend = FakeBackend(draft=make_draft([SUPPORTED]), status="in_review")
+    backend.install(monkeypatch)
+    def broken(tid, k=3):
+        raise api_client.ApiError(502, "search failed")
+    monkeypatch.setattr(api_client, "similar_tickets", broken)
+    at = AppTest.from_file(APP, default_timeout=15).run()
+    assert not at.exception
+    assert any("Send as drafted" == b.label for b in at.button)
+
+
+def test_reply_box_is_drawn_even_when_similar_tickets_fail(monkeypatch):
+    backend = FakeBackend(draft=make_draft([SUPPORTED]), status="in_review")
+    backend.install(monkeypatch)
+    def down(tid, k=3):
+        raise api_client.ApiError(0, "timed out")
+    monkeypatch.setattr(api_client, "similar_tickets", down)
+    at = AppTest.from_file(APP, default_timeout=15).run()
+    assert not at.exception
+    assert at.text_area(key="reply_1").value                      # the reply box exists and is filled
+    assert any("not available right now" in c.value for c in at.caption)

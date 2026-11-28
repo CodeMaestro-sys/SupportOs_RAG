@@ -60,3 +60,7 @@ def get_resolution(ticket_id):
 def resolve(ticket_id, action, final_text=None, draft_id=None):
     return _request("POST", f"/tickets/{ticket_id}/resolve",
                     json={"action": action, "final_text": final_text, "draft_id": draft_id})
+
+
+def similar_tickets(ticket_id, k=3):
+    return _request("GET", f"/tickets/{ticket_id}/similar?k={k}", timeout=15.0)

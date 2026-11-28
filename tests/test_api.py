@@ -29,6 +29,10 @@ class FakePipeline:
     def __init__(self, result=None, error=None):
         self.result, self.error, self.calls = result or CANNED, error, 0
 
+    def similar(self, query, k=3):
+        return [{"ticket_id": 7, "intent": "cancel_order", "query": "cancel my order", "response": "Open My Orders.",
+                 "score": 0.9}][:k]
+
     def run(self, query):
         self.calls += 1
         if self.error:
@@ -224,3 +228,17 @@ def test_draft_comes_with_a_customer_ready_reply_text(client):
     body = client.post(f"/tickets/{tid}/draft").json()
     assert "[1]" in body["draft_text"]                   # the raw draft keeps its citations
     assert body["reply_text"] == CLEAN                   # the reply for the customer does not
+
+
+def test_similar_resolved_tickets_are_returned(client):
+    use_pipeline(FakePipeline())
+    tid = new_ticket(client)
+    r = client.get(f"/tickets/{tid}/similar")
+    assert r.status_code == 200 and r.json()[0]["ticket_id"] == 7 and r.json()[0]["score"] == 0.9
+
+
+def test_similar_for_missing_ticket_is_404_and_bad_k_is_400(client):
+    use_pipeline(FakePipeline())
+    assert client.get("/tickets/999/similar").status_code == 404
+    tid = new_ticket(client)
+    assert client.get(f"/tickets/{tid}/similar?k=0").status_code == 400

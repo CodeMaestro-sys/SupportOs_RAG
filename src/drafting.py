@@ -17,8 +17,8 @@ def build_prompt(query, passages):
     return f"Passages:\n{blocks}\n\nCustomer message:\n{query}\n\nDraft reply:"
 
 
-def draft(llm, retriever, query, k=4, floor=FLOOR, system=SYSTEM):
-    passages = retriever.search_chunks(query, k=k)
+def draft(llm, retriever, query, k=4, floor=FLOOR, system=SYSTEM, extra_passages=None):
+    passages = retriever.search_chunks(query, k=k) + list(extra_passages or [])
     if passages[0][2] < floor:                       # evidence is clearly unrelated: skip the LLM call
         return {"query": query, "passages": passages, "draft": "", "abstained": True,
                 "reason": "low_retrieval_score", "cited": []}
@@ -48,3 +48,7 @@ def outcome(o):
     if not o["cited"] and "?" in o["draft"]:
         return "clarify"
     return "answered"
+
+SYSTEM_D = SYSTEM_C + (" 6. Passages whose label starts with past-ticket are earlier replies to similar customers. "
+                       "If they disagree with the policy passages, follow the policy passages. "
+                       "Never repeat order numbers, names or amounts from a past ticket.")

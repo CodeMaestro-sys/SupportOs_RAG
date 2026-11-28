@@ -26,8 +26,9 @@ EXEMPT = {_norm(s) for s in EXEMPT_SENTENCES}
 
 
 class Pipeline:
-    def __init__(self, retriever, drafter, verifier, prompt=SYSTEM_C, prompt_version=PROMPT_VERSION):
+    def __init__(self, retriever, drafter, verifier, prompt=SYSTEM_C, prompt_version=PROMPT_VERSION, past_index=None):
         self.retriever = retriever
+        self.past_index = past_index
         self.drafter = drafter
         self.verifier = verifier
         self.prompt = prompt
@@ -42,17 +43,29 @@ class Pipeline:
         load_dotenv(override=True)
         from db import get_connection
         from llm import LLM
+        from past_tickets import PastTicketIndex
         from retrieval import DenseChunks
 
         conn = get_connection()
         try:
             retriever = DenseChunks(conn)
+            past_index = PastTicketIndex(conn, retriever.model)       # loads cached vectors, or builds them once
         finally:
             conn.close()
         drafter = LLM(min_interval=float(os.getenv("DRAFTER_MIN_INTERVAL", "4.5")))        # model from GEMINI_MODEL
         verifier = LLM(model=os.getenv("VERIFIER_MODEL", "gemini-3.1-flash-lite"),
                        min_interval=float(os.getenv("VERIFIER_MIN_INTERVAL", "4.5")))
-        return cls(retriever, drafter, verifier)
+        return cls(retriever, drafter, verifier, past_index=past_index)
+
+    def similar(self, query, k=3):
+        """Similar resolved tickets, shown to the agent for context. They are NOT given to the drafting model:
+        the past-ticket experiment showed that doing so added sentences the policy does not support."""
+        if self.past_index is None:
+            return []
+        with self._lock:
+            matches = self.past_index.search(query, k=k)
+        return [{"ticket_id": m["ticket_id"], "intent": m["intent"], "query": m["query"],
+                 "response": m["response"], "score": round(float(m["score"]), 3)} for m in matches]
 
     def run(self, query):
         with self._lock:

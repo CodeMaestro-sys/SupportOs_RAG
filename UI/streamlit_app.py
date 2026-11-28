@@ -146,12 +146,7 @@ if sentences:
         render_sentence(s)
 
 left, right = st.columns([3, 2])
-with right:
-    st.markdown("**Evidence used**")
-    for i, p in enumerate(draft["passages"], 1):
-        with st.expander(f"[{i}] {p['doc_id']}  (match {p['score']:.2f})", expanded=False):
-            st.markdown(p["text"])
-
+# The reply box is drawn first, so a slow 'similar tickets' request can never hide it.
 with left:
     st.markdown("**Reply to send**")
     text = st.text_area("Edit the reply if needed", value=draft["reply_text"], height=230,
@@ -184,3 +179,22 @@ with left:
                 show_error(e)
                 st.stop()
         st.rerun()
+
+with right:
+    st.markdown("**Evidence used**")
+    for i, p in enumerate(draft["passages"], 1):
+        with st.expander(f"[{i}] {p['doc_id']}  (match {p['score']:.2f})", expanded=False):
+            st.markdown(p["text"])
+
+    try:
+        similar = api.similar_tickets(selected)
+    except api.ApiError:
+        similar = None                                 # context only: never block the agent because of it
+        st.caption("Similar resolved tickets are not available right now.")
+    if similar:
+        st.markdown("**Similar resolved tickets**")
+        st.caption("For context only. The draft is built from the policy documents, not from these replies.")
+        for m in similar:
+            with st.expander(f"#{m['ticket_id']}  {m['query'][:42]}  (match {m['score']:.2f})", expanded=False):
+                st.markdown("**Customer:** " + m["query"])
+                st.markdown("**Agent replied:** " + m["response"])

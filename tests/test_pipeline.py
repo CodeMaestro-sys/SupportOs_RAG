@@ -77,3 +77,17 @@ def test_whole_number_matching_in_rule_check():
 
 def test_sentence_splitting_keeps_citations():
     assert split_sentences("Hello! You can cancel [2]. Done.") == ["Hello!", "You can cancel [2].", "Done."]
+
+
+def test_similar_tickets_come_from_the_past_ticket_index_and_are_rounded():
+    class FakeIndex:
+        def search(self, query, k=3):
+            return [{"ticket_id": 4, "intent": "cancel_order", "query": "cancel", "response": "reply", "score": 0.912345}][:k]
+    pipe = Pipeline(FakeRetriever(), FakeLLM(text="x"), FakeLLM(labels=[]), past_index=FakeIndex())
+    out = pipe.similar("cancel my order", k=1)
+    assert out == [{"ticket_id": 4, "intent": "cancel_order", "query": "cancel", "response": "reply", "score": 0.912}]
+
+
+def test_similar_tickets_without_an_index_is_an_empty_list():
+    pipe, _, _ = make("x")
+    assert pipe.similar("anything") == []

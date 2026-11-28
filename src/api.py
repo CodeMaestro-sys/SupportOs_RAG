@@ -27,7 +27,7 @@ async def lifespan(app):
     yield
 
 
-app = FastAPI(title="SupportOps API", version="0.4", lifespan=lifespan)
+app = FastAPI(title="SupportOps API", version="0.5", lifespan=lifespan)
 
 _pipeline = None
 
@@ -69,6 +69,14 @@ class TicketOut(BaseModel):
 class Passage(BaseModel):
     doc_id: str
     text: str
+    score: float
+
+
+class SimilarOut(BaseModel):
+    ticket_id: int
+    intent: str
+    query: str
+    response: str
     score: float
 
 
@@ -240,3 +248,15 @@ def get_resolution(ticket_id: int, db=Depends(get_db)):
     if row is None:
         raise HTTPException(status_code=404, detail="This ticket has not been resolved yet")
     return dict(row)
+
+
+@app.get("/tickets/{ticket_id}/similar", response_model=list[SimilarOut])
+def similar_tickets(ticket_id: int, k: int = 3, db=Depends(get_db), pipeline=Depends(get_pipeline)):
+    ticket = fetch_ticket(db, ticket_id)
+    if not 1 <= k <= 10:
+        raise HTTPException(status_code=400, detail="k must be between 1 and 10")
+    try:
+        return pipeline.similar(ticket["query"], k=k)
+    except Exception:
+        log.exception("similar-ticket search failed for ticket %s", ticket_id)
+        raise HTTPException(status_code=502, detail="The similar-ticket search failed. Try again later.")
